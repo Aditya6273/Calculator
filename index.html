@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SCIENTIFIC CALCI</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0074d9, #2ecc40) no-repeat;
+            color: #fff;
+            /* text color */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 95%;
+        }
+
+        #container {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            margin: 0 auto;
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        input {
+            display: block;
+            margin: 10px 0;
+            font-size: 16px;
+            height: 30px;
+            width: 100%;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        label,
+        select {
+            display: block;
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+            /* border: 2px solid white; */
+            color: black;
+        }
+
+        ::placeholder {
+            font-size: 15px;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .btn button {
+            border: 2px solid black;
+        }
+
+        h1 i {
+            color: black;
+            font-size: 1.5em;
+            text-decoration: underline;
+        }
+
+        * {
+            color: black;
+        }
+
+        .img1 {
+            display: flex;
+            align-items: center;
+            position: relative;
+            top: -2rem;
+        }
+
+        img {
+            height: 100px;
+            width: 141px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img1">
+        <img src="vp.jpeg" alt="loading...">
+    </div>
+    <h1><i>SCIENTIFIC CALCULATOR</i></h1>
+    <div id="container">
+        <label for="angle">Angle (degrees):</label>
+        <input type="number" id="angle" step="0.01" placeholder="ENTER VALUE IN DEGREE" />
+
+        <label for="operation">Operation:</label>
+        <select id="operation">
+            <option value="sine">Sine</option>
+            <option value="cosine">Cosine</option>
+            <option value="tangent">Tangent</option>
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>
+
+        <label for="angle2">Angle 2 (degrees):</label>
+        <input type="number" id="angle2" step="0.01" placeholder="ENTER VALUE IN DEGREE" />
+        <div class="btn">
+            <button onclick="performOperation()">Perform Operation</button>
+            <button onclick="calculateTrigValues()" style="margin-right: 20px;">Calculate Trig Values</button>
+        </div>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculateTrigValues() {
+            const angle = parseFloat(document.getElementById("angle").value);
+
+            if (isNaN(angle)) {
+                alert("Please enter a valid numeric value for the angle.");
+                return;
+            }
+
+            const angle_rad = (angle * Math.PI) / 180;
+            const sine = Math.sin(angle_rad);
+            const cosine = Math.cos(angle_rad);
+            const tangent = (angle === 90 || angle === 270) ? 'undefined' : Math.tan(angle_rad).toFixed(2);
+
+            document.getElementById("result").textContent = `Sine: ${sine.toFixed(2)}, Cosine: ${cosine.toFixed(2)}, Tangent: ${tangent}`;
+        }
+
+        function performOperation() {
+            const operation = document.getElementById("operation").value;
+            const angle1 = parseFloat(document.getElementById("angle").value);
+            const angle2 = parseFloat(document.getElementById("angle2").value);
+
+            if (isNaN(angle1) || isNaN(angle2)) {
+                alert("Please enter valid numeric values for the angles.");
+                return;
+            }
+
+            const angle1_rad = (angle1 * Math.PI) / 180;
+            const angle2_rad = (angle2 * Math.PI) / 180;
+
+            let result;
+            if (operation === "sine") {
+                result = Math.sin(angle1_rad).toFixed(2);
+            } else if (operation === "cosine") {
+                result = Math.cos(angle1_rad).toFixed(2);
+            } else if (operation === "tangent") {
+                result = (angle1 === 90 || angle1 === 270) ? 'undefined' : Math.tan(angle1_rad).toFixed(2);
+            } else if (operation === "add") {
+                result = (Math.sin(angle1_rad) + Math.sin(angle2_rad)).toFixed(2);
+            } else if (operation === "subtract") {
+                result = (Math.sin(angle1_rad) - Math.sin(angle2_rad)).toFixed(2);
+            } else if (operation === "multiply") {
+                result = (Math.sin(angle1_rad) * Math.sin(angle2_rad)).toFixed(2);
+            } else if (operation === "divide") {
+                result = (Math.sin(angle1_rad) / Math.sin(angle2_rad)).toFixed(2);
+            }
+
+            document.getElementById("result").textContent = `Result: ${result}`;
+        }
+    </script>
+</body>
+
+</html>
